@@ -1,4 +1,4 @@
-# Import necessary libraries
+# Import necessary librariesthem
 import random
 import time
 import pygame
@@ -59,7 +59,7 @@ def play_audio(number, sound_model):
 
 
 # Predefine variables
-os.system('cls')
+os.system('cls||clear')
 status = True
 mistakes_in_a_row = 0
 loop_nr = 0
@@ -70,7 +70,7 @@ print()
 
 # Ask for user's name
 name = input('Please enter your name ---> ')
-os.system('cls')
+os.system('cls||clear')
 
 # Get current date
 current_date = time.strftime("%d/%m/%Y")
@@ -91,8 +91,8 @@ while True:
         break
     else:
         print("Please enter a valid option.")
-        os.system('cls')
-os.system('cls')
+        os.system('cls||clear')
+os.system('cls||clear')
 
 # how comfortable is the environment, 1 - not comfortable, 10 - very comfortable
 while True:
@@ -104,8 +104,8 @@ while True:
         break
     else:
         print("Please enter a valid option.")
-        os.system('cls')
-os.system('cls')
+        os.system('cls||clear')
+os.system('cls||clear')
 
 # tiredness level, 1 - not tired, 10 - tired
 while True:
@@ -117,8 +117,8 @@ while True:
         break
     else:
         print("Please enter a valid option.")
-        os.system('cls')
-os.system('cls')
+        os.system('cls||clear')
+os.system('cls||clear')
 
 # physical activity minutes
 while True:
@@ -127,8 +127,8 @@ while True:
         break
     else:
         print("Please enter a valid number.")
-        os.system('cls')
-os.system('cls')
+        os.system('cls||clear')
+os.system('cls||clear')
 
 # mental state, 1 - not focused, 10- focused
 while True:
@@ -140,8 +140,8 @@ while True:
         break
     else:
         print("Please enter a valid option.")
-        os.system('cls')
-os.system('cls')
+        os.system('cls||clear')
+os.system('cls||clear')
 
 # motivation level, 1 - not motivated, 10 - very motivated
 while True:
@@ -153,8 +153,8 @@ while True:
         break
     else:
         print("Please enter a valid option.")
-        os.system('cls')
-os.system('cls')
+        os.system('cls||clear')
+os.system('cls||clear')
 
 # Ask for starting n and ensure it is a number
 if mode == '3':
@@ -173,9 +173,9 @@ else:
             break
         else:
             print("Please enter a valid number.")
-            os.system('cls')
-        os.system('cls')
-os.system('cls')    
+            os.system('cls||clear')
+        os.system('cls||clear')
+os.system('cls||clear')    
 
 # Ask for sound model and ensure it is a valid option
 while True:
@@ -191,15 +191,15 @@ while True:
         break
     else:
         print("Please enter a valid option.")
-        os.system('cls')
-os.system('cls')
+        os.system('cls||clear')
+os.system('cls||clear')
 
 # ask for wait time between numbers'
 if mode == '1':
     wait_time = float(input('Please enter wait time between numbers in seconds ---> '))
 elif mode == '2' or mode == '3':
     wait_time = 0
-os.system('cls')
+os.system('cls||clear')
 
 # ask for memory method, 1 - no method, 2 - memory palace
 if mode == '3':
@@ -226,7 +226,7 @@ else:
         memory_method = input(' ---> ')
         break
 
-os.system('cls')
+os.system('cls||clear')
 
 # Display game rules
 print('Rules:')
@@ -239,7 +239,7 @@ print()
 print('________________________')
 print('Press ENTER to start')
 input()
-os.system('cls')
+os.system('cls||clear')
 
 # Check if log file exists
 if os.path.isfile('Logs/' + name + '_digit_span_log.csv'):
@@ -290,7 +290,7 @@ while status:
     print('Please repeat the numbers in one line')
     print()
     recalled_sequence = str(input(' ---> '))
-    os.system('cls')
+    os.system('cls||clear')
     
 
     # Stop time measurement
@@ -318,7 +318,7 @@ while status:
         print('Press ENTER to continue or leave feedback by typing now!')
         print()
         feedback = input(' ---> ')
-        os.system('cls')
+        os.system('cls||clear')
     
     # Compose data
     data = {'user_name': name, 'date': current_date, 'time': time.strftime("%H:%M:%S"), 'session_nr': session_nr, 'loop_nr': loop_nr, 'presented_sequence': presented_sequence,
@@ -345,18 +345,18 @@ while status:
     # if benchmark mode
     if mode == '3':
         if benchmark_test_loop_nr == 14:
-            os.system('cls')
+            os.system('cls||clear')
             print('You have reached the end of benchmark test.')
             print()
             print('Press ENTER to continue')
             input()
-            os.system('cls')
+            os.system('cls||clear')
             status = False
             df.to_csv('Logs/' + name + '_digit_span_log.csv', index=False)
         else:
             print('Press ENTER to continue')
             input()
-            os.system('cls')
+            os.system('cls||clear')
 
     # if not benchmark mode
     else:
@@ -364,7 +364,7 @@ while status:
         print()
         print('...or type "quit" to quit and save your results to a csv file')
         user_input = input(' ---> ')
-        os.system('cls')
+        os.system('cls||clear')
         if user_input.lower() == 'quit':
             print('Please summarize your experience!')
             print()
