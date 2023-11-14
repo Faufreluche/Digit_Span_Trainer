@@ -11,6 +11,13 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
+# check if there are Logs and Feedback folders, if not then create them
+if not os.path.exists('Logs'):
+    os.makedirs('Logs')
+if not os.path.exists('Feedback'):
+    os.makedirs('Feedback')
+
+
 # Define functions
 
 def generate_numbers_list(n):
