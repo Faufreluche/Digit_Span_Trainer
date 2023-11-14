@@ -76,10 +76,11 @@ while True:
     print()
     print('1. Practice')
     print('2. Test')
+    print('3. Baastest (Benchmark)')
     print()
     print('* enter a number *')
     mode = input('---> ')
-    if mode in {'1', '2'}:
+    if mode in {'1', '2', '3'}:
         break
     else:
         print("Please enter a valid option.")
@@ -186,7 +187,7 @@ os.system('cls')
 # ask for wait time between numbers'
 if mode == '1':
     wait_time = float(input('Please enter wait time between numbers in seconds ---> '))
-elif mode == '2':
+elif mode == '2' or mode == '3':
     wait_time = 0
 os.system('cls')
 
