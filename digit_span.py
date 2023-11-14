@@ -6,6 +6,8 @@ import os
 import pandas as pd
 import keyboard
 
+a = 1
+
 # Set working directory
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
