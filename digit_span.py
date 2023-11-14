@@ -248,7 +248,7 @@ if os.path.isfile('Logs/' + name + '_digit_span_log.csv'):
 else:
     df = pd.DataFrame(columns=['user_name', 'date', 'time', 'session_nr', 'loop_nr', 'presented_sequence', 'recalled_sequence', 'outcome', 'mistakes_in_a_row',
                                'recall_time_in_s', 'sound_model', 'digit_length', 'session_time', 'time_between_digits', 'memory_method', 'tiredness',
-                               'physical_activity', 'mental_state', 'motivation', 'location', 'session_mode'])
+                               'physical_activity', 'mental_state', 'motivation', 'location', 'session_mode', 'feedback'])
     session_nr = 1
     
 # start whole game timer
@@ -313,17 +313,26 @@ while status:
     # calculate total session time in hours, minutes and seconds
     session_time = time.strftime("%H:%M:%S", time.gmtime(time.time() - total_time_start))
     
+    # ask for feedback
+    if mode != '3':
+        print('Press ENTER to continue or leave feedback by typing now!')
+        print()
+        feedback = input(' ---> ')
+        os.system('cls')
+    
     # Compose data
     data = {'user_name': name, 'date': current_date, 'time': time.strftime("%H:%M:%S"), 'session_nr': session_nr, 'loop_nr': loop_nr, 'presented_sequence': presented_sequence,
             'recalled_sequence': recalled_sequence, 'outcome': outcome, 'mistakes_in_a_row': mistakes_in_a_row, 'recall_time_in_s': time_taken_loop_input, 'sound_model': sound_model,
             'digit_length': current_loop_n, 'session_time': session_time, 'time_between_digits': wait_time, 'memory_method': memory_method, 'tiredness': tiredness,
-            'physical_activity': physical_activity, 'mental_state': mental_state, 'location': location, 'motivation': motivation, 'session_mode': mode}
+            'physical_activity': physical_activity, 'mental_state': mental_state, 'location': location, 'motivation': motivation, 'session_mode': mode, 'feedback': feedback}
 
     # Add data to dataframe
     df = pd.concat([df, pd.DataFrame(data, index=[0])], ignore_index=True)
     
     # print elapsed time in hours, miutes and seconds
     print('__________________________')
+    print(outcome + '!')
+    print()
     print('Total time elapsed from start: ' + time.strftime("%H:%M:%S", time.gmtime(time.time() - total_time_start)))
     # print current loop number and length of series
     print()
@@ -352,7 +361,6 @@ while status:
     # if not benchmark mode
     else:
         print('Press ENTER to continue')
-        print()
         print()
         print('...or type "quit" to quit and save your results to a csv file')
         user_input = input(' ---> ')
