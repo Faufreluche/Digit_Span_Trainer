@@ -150,21 +150,24 @@ while True:
 os.system('cls')
 
 # Ask for starting n and ensure it is a number
-while True:
-    print('Please enter starting point for digit span test.')
-    print()
-    print('Press ENTER for default 3 digits')
-    n_input = input('...or enter a custom starting point for digit span test ---> ')
-    if n_input.isdigit():
-        n = int(n_input)
-        break
-    elif n_input == '':
-        n = 3
-        break
-    else:
-        print("Please enter a valid number.")
+if mode == '3':
+    n = 3
+else:
+    while True:
+        print('Please enter starting point for digit span test.')
+        print()
+        print('Press ENTER for default 3 digits')
+        n_input = input('...or enter a custom starting point for digit span test ---> ')
+        if n_input.isdigit():
+            n = int(n_input)
+            break
+        elif n_input == '':
+            n = 3
+            break
+        else:
+            print("Please enter a valid number.")
+            os.system('cls')
         os.system('cls')
-    os.system('cls')
 os.system('cls')    
 
 # Ask for sound model and ensure it is a valid option
@@ -192,26 +195,29 @@ elif mode == '2' or mode == '3':
 os.system('cls')
 
 # ask for memory method, 1 - no method, 2 - memory palace
-while True:
-    print('Please choose memory method that you practiced today.')
-    print()
-    print('Examples: 4, 7, 10 or 6')
-    print()
-    print('1. Repeating the audio')
-    print('2. Visualizing the digits')
-    print('3. Rhyming words with numbers to visualize images')
-    print('4. Translating number shape to images')
-    print('5. Phonetic number system to create images (1 digit at a time)')
-    print('6. Phonetic number system to create images (2 digits at a time)')
-    print('7. Method of Loci')
-    print('8. Using absurd connections')
-    print('9. Number chunking')
-    print('10. Using personal connections')
-    print('11. No method')
-    print()
-    print('* enter a number *')
-    memory_method = input(' ---> ')
-    break
+if mode == '3':
+    memory_method = '11'
+else:
+    while True:
+        print('Please choose memory method that you practiced today.')
+        print()
+        print('Examples: 4, 7, 10 or 6')
+        print()
+        print('1. Repeating the audio')
+        print('2. Visualizing the digits')
+        print('3. Rhyming words with numbers to visualize images')
+        print('4. Translating number shape to images')
+        print('5. Phonetic number system to create images (1 digit at a time)')
+        print('6. Phonetic number system to create images (2 digits at a time)')
+        print('7. Method of Loci')
+        print('8. Using absurd connections')
+        print('9. Number chunking')
+        print('10. Using personal connections')
+        print('11. No method')
+        print()
+        print('* enter a number *')
+        memory_method = input(' ---> ')
+        break
 
 os.system('cls')
 
@@ -241,10 +247,14 @@ else:
 # start whole game timer
 total_time_start = time.time()
 
+# Benchmark test params
+benchmark_test_loop_nr = 0
+
 # Game loop
 while status:
     loop_nr += 1
     current_loop_n = n
+    benchmark_test_loop_nr += 1
     
     # Generate list of numbers
     numbers_list = generate_numbers_list(n)
@@ -310,31 +320,50 @@ while status:
     print('Total time elapsed from start: ' + time.strftime("%H:%M:%S", time.gmtime(time.time() - total_time_start)))
     # print current loop number and length of series
     print()
-    print('Current round number: ' + str(loop_nr))
+    print('This was round number ' + str(loop_nr))
     print('Next digit length: ' + str(n))
     print('__________________________')
 
     # Clear screen and wait for user input
-    print('Press ENTER to continue')
-    print()
-    print()
-    print('...or type "quit" to quit and save your results to a csv file')
-    user_input = input(' ---> ')
-    os.system('cls')
-    if user_input.lower() == 'quit':
-        print('Please summarize your experience!')
+    
+    # if benchmark mode
+    if mode == '3':
+        if benchmark_test_loop_nr == 14:
+            os.system('cls')
+            print('You have reached the end of benchmark test.')
+            print()
+            print('Press ENTER to continue')
+            input()
+            os.system('cls')
+            status = False
+            df.to_csv('Logs/' + name + '_digit_span_log.csv', index=False)
+        else:
+            print('Press ENTER to continue')
+            input()
+            os.system('cls')
+
+    # if not benchmark mode
+    else:
+        print('Press ENTER to continue')
         print()
-        print('(ENTER for skip)')
         print()
-        feedback = input(' ---> ')
-        # save feedback as a text file with session number, user name and date and time as object
-        if feedback != '':
-            #generate datetime parameter yyyymmdd_hhmmss
-            feedback_datetime = time.strftime("%Y%m%d_%H%M%S")
-            with open('Feedback/feedback_' + name + '_' + str(feedback_datetime) + '.txt', 'w') as f:
-                f.write(feedback)
-        status = False
-        print('Thank you for playing!')
-        # print elapsed time in hours, miutes and seconds
-        print('Total time elapsed: ' + time.strftime("%H:%M:%S", time.gmtime(time.time() - total_time_start)))
-        df.to_csv('Logs/' + name + '_digit_span_log.csv', index=False)
+        print('...or type "quit" to quit and save your results to a csv file')
+        user_input = input(' ---> ')
+        os.system('cls')
+        if user_input.lower() == 'quit':
+            print('Please summarize your experience!')
+            print()
+            print('(ENTER for skip)')
+            print()
+            feedback = input(' ---> ')
+            # save feedback as a text file with session number, user name and date and time as object
+            if feedback != '':
+                #generate datetime parameter yyyymmdd_hhmmss
+                feedback_datetime = time.strftime("%Y%m%d_%H%M%S")
+                with open('Feedback/feedback_' + name + '_' + str(feedback_datetime) + '.txt', 'w') as f:
+                    f.write(feedback)
+            status = False
+            print('Thank you for playing!')
+            # print elapsed time in hours, miutes and seconds
+            print('Total time elapsed: ' + time.strftime("%H:%M:%S", time.gmtime(time.time() - total_time_start)))
+            df.to_csv('Logs/' + name + '_digit_span_log.csv', index=False)
