@@ -319,6 +319,8 @@ while status:
         print()
         feedback = input(' ---> ')
         os.system('cls||clear')
+    else:
+        feedback = ''
     
     # Compose data
     data = {'user_name': name, 'date': current_date, 'time': time.strftime("%H:%M:%S"), 'session_nr': session_nr, 'loop_nr': loop_nr, 'presented_sequence': presented_sequence,
