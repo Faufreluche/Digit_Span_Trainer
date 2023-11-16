@@ -4,10 +4,6 @@ from tkinter import filedialog
 import json
 import random
 
-# Check for the existence of the "Trainer Saves" directory and create it if it doesn't exist
-save_directory = "Trainer Saves"
-if not os.path.exists(save_directory):
-    os.makedirs(save_directory)
 
 # Dark theme colors
 bg_color = "#333333"  # Background color
@@ -36,9 +32,14 @@ def save_data():
         for c in range(10):
             key = f"{r}{c}"  # Concatenating row and column
             data_to_save[key] = cells[r][c].get()
-    filename = file_name_entry.get()
-    if filename:
-        filepath = os.path.join(save_directory, filename + ".json")
+
+    # Ask the user to provide a filename and select a directory to save the file
+    filepath = filedialog.asksaveasfilename(
+        defaultextension=".json",
+        filetypes=[("JSON Files", "*.json")]
+    )
+
+    if filepath:  # Check if a filename was entered
         with open(filepath, "w") as file:
             json.dump(data_to_save, file)
 
@@ -78,7 +79,7 @@ def train():
     next_button.pack(side=tk.RIGHT, padx=20, pady=20)
 
 root = tk.Tk()
-root.title("Multiplication Table Editor")
+root.title("Digit Span Trainer")
 root.configure(bg=bg_color)
 root.geometry("1320x600")
 
@@ -118,18 +119,7 @@ clear_button = tk.Button(root, text="Clear Data", command=clear_data, bg=clear_b
 clear_button.grid(row=15, column=0, columnspan=3, padx=5, pady=5)
 
 train_button = tk.Button(root, text="Train", command=train, bg=btn_color, fg=fg_color, font=train_button_font)
-train_button.grid(row=14, column=4, columnspan=2, padx=5, pady=5)
-
-file_name_entry = tk.Entry(root, bg=entry_bg, fg=entry_fg, font=cell_font)
-file_name_entry.grid(row=14, column=7, columnspan=3, padx=5, pady=5)
-
-file_name_entry = tk.Entry(root, bg=entry_bg, fg=entry_fg, font=cell_font)
-file_name_entry.grid(row=14, column=7, columnspan=3, padx=5, pady=5)
-
-# Small italic text label for instructions
-instruction_label_font = ("Helvetica", 10, "italic")
-instruction_label = tk.Label(root, text="Enter filename before pressing save", bg=bg_color, fg=fg_color, font=instruction_label_font)
-instruction_label.grid(row=15, column=7, columnspan=3, padx=5, pady=10)
+train_button.grid(row=15, column=4, columnspan=2, padx=5, pady=5)
 
 save_button = tk.Button(root, text="Save Data", command=save_data, bg=btn_color, fg=fg_color, font=button_font)
 save_button.grid(row=14, column=10, columnspan=3, padx=5, pady=5)
