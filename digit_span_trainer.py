@@ -3,7 +3,12 @@ import tkinter as tk
 from tkinter import filedialog
 import json
 import random
+import pygame
+import time
 
+pygame.mixer.init()
+
+wait_after_sound = 0
 
 # Dark theme colors
 bg_color = "#333333"  # Background color
@@ -58,10 +63,47 @@ def train():
 
     def next_pair():
         info_label.config(text="")  # Clear the displayed word
+
         row = random.randint(0, 9)
         col = random.randint(0, 9)
         number = f"{row}{col}"  # Generating number as row-column combination
         current_number.set(number)
+        
+        # Translate the number into a sound file name where 1 is yks, 2 is kaks, etc.
+        base_sound_directory = "Soundmodels/3/"
+        number_1 = str(row)
+        number_2 = str(col)
+        number_to_sound = {
+            "0": "null",
+            "1": "yks",
+            "2": "kaks",
+            "3": "kolm",
+            "4": "neli",
+            "5": "viis",
+            "6": "kuus",
+            "7": "seitse",
+            "8": "kaheksa",
+            "9": "yheksa"
+        }
+        number_text_1 = number_to_sound.get(number_1, "null")
+        number_text_2 = number_to_sound.get(number_2, "null")
+        
+        # Create sound file paths for first and second numbers
+        sound_file_1 = os.path.join(base_sound_directory, f"{number_text_1}.mp3")
+        sound_file_2 = os.path.join(base_sound_directory, f"{number_text_2}.mp3")
+        
+        # Load and play the corresponding sound files sequentially
+        sound_1 = pygame.mixer.Sound(sound_file_1)
+        sound_2 = pygame.mixer.Sound(sound_file_2)
+        
+        sound_1.play()
+        pygame.time.delay(int(sound_1.get_length() * 1000))  # Delay for the duration of the first sound
+        sound_2.play()
+        pygame.time.delay(int(sound_2.get_length() * 1000))  # Delay for the duration of the first sound
+        
+        # Delay for 3 seconds
+        time.sleep(wait_after_sound)
+
 
     def show_info():
         info_label.config(text=data.get(current_number.get(), "No info available"))
