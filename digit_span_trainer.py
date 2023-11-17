@@ -60,6 +60,7 @@ def train():
 
     wait_after_sound = scale.get()
     current_number = tk.StringVar(train_window, value="00")
+    show_auto = show_auto_var.get()
 
     # Create initial fonts
     number_font = tkFont.Font(family="Helvetica", size=48)
@@ -119,6 +120,8 @@ def train():
         # Delay for 3 seconds
         time.sleep(wait_after_sound)
 
+        if show_auto:
+            show_info()
 
     def show_info():
         info_label.config(text=data.get(current_number.get(), "No info available"))
@@ -140,7 +143,7 @@ def train():
     train_window.grid_rowconfigure(1, weight=1)
     train_window.grid_rowconfigure(2, weight=1)
 
-     # Widgets creation with dynamic font resizing
+    # Widgets creation with dynamic font resizing
     number_label = tk.Label(train_window, textvariable=current_number, font=number_font, bg=bg_color, fg=fg_color)
     number_label.grid(row=0, column=0, columnspan=2, sticky="nsew")
 
@@ -199,11 +202,17 @@ train_button.grid(row=15, column=4, columnspan=2, padx=5, pady=5)
 save_button = tk.Button(root, text="Save Data", command=save_data, bg=btn_color, fg=fg_color, font=button_font)
 save_button.grid(row=14, column=10, columnspan=3, padx=5, pady=5)
 
-# create a slider in root window
-scale = tk.Scale(root, from_=0, to=20, orient=tk.HORIZONTAL, length=300 ,bg=bg_color, fg=fg_color, font=button_font)
+# Create a slider in the root window
+scale = tk.Scale(root, from_=0, to=20, orient=tk.HORIZONTAL, length=300, bg=bg_color, fg=fg_color, font=button_font)
 scale.grid(row=15, column=5, columnspan=10, padx=0, pady=0)
-# add label for slider in small italic font
+
+# Add label for slider in small italic font
 scale_label = tk.Label(root, text="Delay (s) after sound before showing answer", bg=bg_color, fg=fg_color, font=label_font)
 scale_label.grid(row=16, column=4, columnspan=10, padx=0, pady=0)
+
+# Checkbox for showing answer automatically
+show_auto_var = tk.IntVar()
+show_auto_checkbox = tk.Checkbutton(root, text="Show Automatically", variable=show_auto_var, bg=bg_color, fg=fg_color, font=button_font)
+show_auto_checkbox.grid(row=16, column=0, columnspan=3, padx=5, pady=5)
 
 root.mainloop()
