@@ -8,8 +8,6 @@ import time
 
 pygame.mixer.init()
 
-wait_after_sound = 0
-
 # Dark theme colors
 bg_color = "#333333"  # Background color
 fg_color = "#FFFFFF"  # Foreground (text) color
@@ -58,6 +56,9 @@ def train():
     train_window.title("Training")
     train_window.configure(bg=bg_color)
     train_window.geometry("500x300")
+
+    # get slider value
+    wait_after_sound = scale.get()
 
     current_number = tk.StringVar(train_window, value="00")
 
@@ -165,5 +166,12 @@ train_button.grid(row=15, column=4, columnspan=2, padx=5, pady=5)
 
 save_button = tk.Button(root, text="Save Data", command=save_data, bg=btn_color, fg=fg_color, font=button_font)
 save_button.grid(row=14, column=10, columnspan=3, padx=5, pady=5)
+
+# create a slider in root window
+scale = tk.Scale(root, from_=0, to=20, orient=tk.HORIZONTAL, length=300 ,bg=bg_color, fg=fg_color, font=button_font)
+scale.grid(row=15, column=5, columnspan=10, padx=0, pady=0)
+# add label for slider in small italic font
+scale_label = tk.Label(root, text="Delay (s) after sound before showing answer", bg=bg_color, fg=fg_color, font=label_font)
+scale_label.grid(row=16, column=4, columnspan=10, padx=0, pady=0)
 
 root.mainloop()
