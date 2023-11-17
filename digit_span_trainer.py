@@ -197,7 +197,7 @@ clear_button = tk.Button(root, text="Clear Data", command=clear_data, bg=clear_b
 clear_button.grid(row=15, column=0, columnspan=3, padx=5, pady=5)
 
 train_button = tk.Button(root, text="Train", command=train, bg=btn_color, fg=fg_color, font=train_button_font)
-train_button.grid(row=15, column=4, columnspan=2, padx=5, pady=5)
+train_button.grid(row=15, column=3, columnspan=2, padx=5, pady=5)
 
 save_button = tk.Button(root, text="Save Data", command=save_data, bg=btn_color, fg=fg_color, font=button_font)
 save_button.grid(row=14, column=10, columnspan=3, padx=5, pady=5)
@@ -207,12 +207,12 @@ scale = tk.Scale(root, from_=0, to=20, orient=tk.HORIZONTAL, length=300, bg=bg_c
 scale.grid(row=15, column=5, columnspan=10, padx=0, pady=0)
 
 # Add label for slider in small italic font
-scale_label = tk.Label(root, text="Delay (s) after sound before showing answer", bg=bg_color, fg=fg_color, font=label_font)
-scale_label.grid(row=16, column=4, columnspan=10, padx=0, pady=0)
+scale_label = tk.Label(root, text="Delay (s) after sound before showing answer", bg=bg_color, fg=fg_color, font=("Helvetica", 10))
+scale_label.grid(row=16, column=5, columnspan=10, padx=0, pady=0)
 
 # Checkbox for showing answer automatically
 show_auto_var = tk.IntVar()
-show_auto_checkbox = tk.Checkbutton(root, text="Show Automatically", variable=show_auto_var, bg=bg_color, fg=fg_color, font=button_font)
-show_auto_checkbox.grid(row=16, column=0, columnspan=3, padx=5, pady=5)
+show_auto_checkbox = tk.Checkbutton(root, text="Show Automatically", var=show_auto_var, bg=bg_color, fg=fg_color, selectcolor=bg_color, font=("Helvetica", 12))
+show_auto_checkbox.grid(row=15, column=4, columnspan=3, padx=5, pady=5)
 
 root.mainloop()
