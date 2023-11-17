@@ -1,5 +1,6 @@
 import os
 import tkinter as tk
+import tkinter.font as tkFont
 from tkinter import filedialog
 import json
 import random
@@ -55,12 +56,25 @@ def train():
     train_window = tk.Toplevel(root)
     train_window.title("Training")
     train_window.configure(bg=bg_color)
-    train_window.geometry("500x300")
+    train_window.geometry("700x700")
 
-    # get slider value
     wait_after_sound = scale.get()
-
     current_number = tk.StringVar(train_window, value="00")
+
+    # Create initial fonts
+    number_font = tkFont.Font(family="Helvetica", size=48)
+    info_font = tkFont.Font(family="Helvetica", size=24)
+
+    def resize_fonts(event):
+        # Adjust font sizes based on the window size
+        # The number font is always larger
+        new_number_size = max(300, min(event.width // 15, event.height // 8))  # Larger minimum size
+        new_info_size = max(20, new_number_size // 5)  # Proportionally smaller than the number size
+        number_font.config(size=new_number_size)
+        info_font.config(size=new_info_size)
+
+    # Bind resize event to the train window
+    train_window.bind("<Configure>", resize_fonts)
 
     def next_pair():
         info_label.config(text="")  # Clear the displayed word
@@ -108,18 +122,36 @@ def train():
 
     def show_info():
         info_label.config(text=data.get(current_number.get(), "No info available"))
+        
+    # Functions to be called on key presses
+    def on_left_arrow(event):
+        show_info()
 
-    number_label = tk.Label(train_window, textvariable=current_number, font=("Helvetica", 48), bg=bg_color, fg=fg_color)
-    number_label.pack(pady=20)
+    def on_right_arrow(event):
+        next_pair()
 
-    info_label = tk.Label(train_window, font=("Helvetica", 24), bg=bg_color, fg=fg_color)
-    info_label.pack(pady=10)
+    # Bind key events to the train window
+    train_window.bind("<Left>", on_left_arrow)
+    train_window.bind("<Right>", on_right_arrow)
 
-    show_button = tk.Button(train_window, text="Show", command=show_info, bg=btn_color, fg=fg_color, font=("Helvetica", 30))
-    show_button.pack(side=tk.LEFT, padx=20, pady=20)
+    # Configure grid weights for dynamic resizing
+    train_window.grid_columnconfigure(0, weight=1)
+    train_window.grid_columnconfigure(1, weight=1)
+    train_window.grid_rowconfigure(1, weight=1)
+    train_window.grid_rowconfigure(2, weight=1)
 
-    next_button = tk.Button(train_window, text="Next", command=next_pair, bg=btn_color, fg=fg_color, font=("Helvetica", 30))
-    next_button.pack(side=tk.RIGHT, padx=20, pady=20)
+     # Widgets creation with dynamic font resizing
+    number_label = tk.Label(train_window, textvariable=current_number, font=number_font, bg=bg_color, fg=fg_color)
+    number_label.grid(row=0, column=0, columnspan=2, sticky="nsew")
+
+    info_label = tk.Label(train_window, font=info_font, bg=bg_color, fg=fg_color)
+    info_label.grid(row=1, column=0, columnspan=2, sticky="nsew")
+
+    show_button = tk.Button(train_window, text="<- Show", command=show_info, bg=btn_color, fg=fg_color, font=("Helvetica", 30))
+    show_button.grid(row=2, column=0, sticky="nsew")
+
+    next_button = tk.Button(train_window, text="Next ->", command=next_pair, bg=btn_color, fg=fg_color, font=("Helvetica", 30))
+    next_button.grid(row=2, column=1, sticky="nsew")
 
 root = tk.Tk()
 root.title("Digit Span Trainer")
